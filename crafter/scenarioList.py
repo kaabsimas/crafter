@@ -11,11 +11,8 @@ class ScenarioList:
     def add(self, name, className):
         self.list[name] = className
 
-    def load(self, name, params=None):
-        if( name in self.list) ):
-            if( params != None )
-                self.active = self[name](self.game, params)
-            else
-                self.active = self[name](self.game)
+    def load(self, name, *args, **kwargs):
+        if( name in self.list ):
+            self.active = self.list[name](self.game, *args, **kwargs
             if( hasattr(self.active, 'new') ):
                 self.active.new()

@@ -8,15 +8,15 @@ from config import Config
 class Game:
     def __init__(self, size, mode = 0):
         self.config = Config()
-        pg.init()
         self.screen = pg.display.set_mode(size, mode)
         pg.display.set_caption(self.config.title)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
-        self.events = None
+        self.eventQueue = None
         self.scenario = ScenarioList(self)
 
     def run(self):
+        pg.init()
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(self.config.fps) / 1000
@@ -26,12 +26,12 @@ class Game:
 
     def events(self):
         # catch all events here
-        self.events = pg.event.get()
+        self.eventQueue = pg.event.get()
         self.__call(self.scenario.active, 'events')
-        for event in self.events:
+        for event in self.eventQueue:
             if event.type == pg.QUIT:
                 self.quit()
-        self.events = None
+        self.eventQueue = None
 
     def update(self):
         self.__call( self.scenario.active, 'update')
@@ -43,7 +43,7 @@ class Game:
     def quit(self):
         pg.quit()
         sys.exit()
-        
+
     def __call(self, obj, method, params=None):
         if( hasattr(obj, method) ):
             func = getattr( obj, method )
@@ -52,3 +52,7 @@ class Game:
                     func(params)
                 else:
                     func()
+
+if( __name__ == '__main__' ):
+    g = Game((200,200))
+    g.run()
