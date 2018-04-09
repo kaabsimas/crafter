@@ -11,8 +11,10 @@ class Config:
         else:
             self.__load_from_dic(params)
 
+    def keys(self):
+        return [f for f in dir(self) if not callable(getattr(self,f)) and not f.startswith('__')]
+
     def __load_from_file(self, filename):
-        # os.path
         settings = __import__(filename, globals(), locals(), [], -1)
         setting_vars = set(dir(settings)) - set(dir(__builtins__))
         for name in setting_vars:
@@ -22,6 +24,13 @@ class Config:
     def __load_from_dic(self, dic):
         for name, value in dic.iteritems():
             setattr(self, name.lower(), value)
+
+    def __getitem__(self, key):
+        if( hasattr(self, key) ):
+            return getattr(self, key)
+
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
 
 
 if( __name__ == '__main__'):
