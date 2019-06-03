@@ -12,7 +12,7 @@ from pygame.locals import *
 from tilemap import *
 
 def load_image( name, colorkey=None):
-    fullname = os.path.join('assets', name)
+    fullname = os.path.join('../assets', name)
     try:
         image = pg.image.load(fullname)
     except pg.error, message:

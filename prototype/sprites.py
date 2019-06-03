@@ -42,7 +42,7 @@ class Tile(pg.sprite.Sprite):
         self.y = y
         self.rect.x = ((self.x-self.y)*TILEWIDTH/2) + self.game.map.rect.width/2 + (-TILEWIDTH / 2)
         self.rect.y = ((self.x+self.y)*TILEHEIGHT/2) + ( 5 if index < 4 else 0)
-        area = ( index * TILEWIDTH, 0, TILEWIDTH, self.game.tilesRect[3])
+        area = ( (index * TILEWIDTH)+1, 0, TILEWIDTH, self.game.tilesRect[3])
         self.image.blit(self.game.tilesSrc, (0, -10, TILEWIDTH, TILEHEIGHT), area)
         font = pg.font.Font(None, 12)
         text = font.render("(%s, %s)"%(x,y), 1, BLACK)
