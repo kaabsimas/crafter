@@ -1,3 +1,4 @@
 *.pyc
 crafter/*.pyc
 tests/*.pyc
+pygame/*
